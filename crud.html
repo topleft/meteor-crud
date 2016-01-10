@@ -5,27 +5,51 @@
 <body>
   <h1>CRUD</h1>
 
-  <form class="new-item">
-    <label>
-      Item
-      <input type="text" name="item" placeholder="Add Item"/>
-    </label>
-    <label>
-      Type
-      <input type="text" name="type" placeholder="Add Type"/>
-    </label>
-    <button type="submit">Submit Item</button>
-  </form>
+  <div class="container">  
+    <form class="new-item">
+      <label>Item</label>
+        <input type="text" name="item" placeholder="Add Item"/>
+      <label>Type</label>
+        <input type="text" name="type" placeholder="Add Type"/>
+      <div class="form-group">  
+        <button class="btn btn-primary" type="submit">Submit Item</button>
+      </div>
+    </form>
+  </div>
 
-  <ul>
-    {{#each item in items}}
-      {{item.name}}, {{item.type}}
-    {{/each}}
-  </ul>
+  <div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+          <td>Name</td>
+          <td>Type</td>
+          <td>Edit</td>
+          <td>Delete</td>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each items}}
+          {{> item}}
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
 
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="item">
+  <tr>
+    <td>
+      {{name}}
+    </td>
+    <td>
+      {{type}}
+    </td>
+    <td>
+      <button class="btn btn-small btn-warning">Edit</button>
+    </td>
+    <td>
+      <button class="btn btn-small btn-danger">Delete</button>
+    </td>
+  </tr>
 </template>
