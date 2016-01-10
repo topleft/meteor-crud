@@ -1,17 +1,25 @@
+Items = new Mongo.Collection("items")
+
 if (Meteor.isClient) {
   // counter starts at 0
   Session.setDefault('counter', 0);
 
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
+  Template.body.helpers({
+    items: function () {
+      return Items.find({});
     }
   });
 
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
+  Template.body.events({
+    'submit .new-item': function (event) {
+      event.preventDefault();
+
+      var item = event.target.item.value;
+      var type = event.target.type.value;
+      Items.insert({name: item, type: type});
+      event.target.item.value = "";
+      event.target.type.value = "";
+      
     }
   });
 }

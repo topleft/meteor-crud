@@ -3,9 +3,26 @@
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
+  <h1>CRUD</h1>
 
-  {{> hello}}
+  <form class="new-item">
+    <label>
+      Item
+      <input type="text" name="item" placeholder="Add Item"/>
+    </label>
+    <label>
+      Type
+      <input type="text" name="type" placeholder="Add Type"/>
+    </label>
+    <button type="submit">Submit Item</button>
+  </form>
+
+  <ul>
+    {{#each item in items}}
+      {{item.name}}, {{item.type}}
+    {{/each}}
+  </ul>
+
 </body>
 
 <template name="hello">
