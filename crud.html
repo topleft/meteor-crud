@@ -16,7 +16,9 @@
       </div>
     </form>
   </div>
-
+  
+  <span>Toggle:{{toggle}}</span>
+  
   <div class="container">
     <table class="table">
       <thead>
@@ -28,8 +30,9 @@
         </tr>
       </thead>
       <tbody>
-        {{#each items}}
-          {{> item}}
+        {{#each item in items}}
+        <span>{{toggle}} | {{item._id}}</span>
+          {{> row toggle=toggle item=item}}
         {{/each}}
       </tbody>
     </table>
@@ -37,19 +40,44 @@
 
 </body>
 
+<template name="row">
+  {{#if matching toggle item._id}}
+    {{> edit}}
+  {{else}}
+    {{> item}}
+  {{/if}}
+</template>
+
 <template name="item">
   <tr>
     <td>
-      {{name}}
+      {{item.name}}
     </td>
     <td>
-      {{type}}
+      {{item.type}}
     </td>
     <td>
-      <button class="btn btn-small btn-warning">Edit</button>
+      <button id="edit" class="btn btn-small btn-warning">Edit</button>
     </td>
     <td>
-      <button class="btn btn-small btn-danger">Delete</button>
+      <button id="delete" class="btn btn-small btn-danger">Delete</button>
+    </td>    
+  </tr>
+</template>
+
+<template name="edit">
+  <tr>
+    <td>
+      <input type="text" value="{{item.name}}"/>
+    </td>
+    <td>
+      <input type="text" value="{{item.type}}"/>
+    </td>
+    <td>
+      <button id="edit" class="btn btn-small btn-warning">Edit</button>
+    </td>
+    <td>
+      <button id="delete" class="btn btn-small btn-danger">Delete</button>
     </td>
   </tr>
 </template>
