@@ -1,47 +1,56 @@
+
 <head>
   <title>crud</title>
 </head>
 
 <body>
-  <h1>CRUD</h1>
 
-  <div class="container">  
-    <form class="new-item">
-      <label>Item</label>
-        <input type="text" name="item" placeholder="Add Item"/>
-      <label>Type</label>
-        <input type="text" name="type" placeholder="Add Type"/>
-      <div class="form-group">  
-        <button class="btn btn-primary" type="submit">Submit Item</button>
-      </div>
-    </form>
-  </div>
-  
-  <span>Toggle:{{toggle}}</span>
-  
+  <br>
+  <br>
+  <br>
+  <br>
+
   <div class="container">
-    <table class="table">
-      <thead>
-        <tr>
-          <td>Name</td>
-          <td>Type</td>
-          <td>Edit</td>
-          <td>Delete</td>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each item in items}}
-        <span>{{toggle}} | {{item._id}}</span>
-          {{> row toggle=toggle item=item}}
-        {{/each}}
-      </tbody>
-    </table>
+    <div class="row">
+      <div class="col-xs-6 col-center">
+        <form class="new-item form-inline">
+          <div class="form-group">
+            <input class="form-control" type="text" name="item" placeholder="Add Item"/>
+            <input class="form-control" type="text" name="type" placeholder="Add Type"/>
+            <button class="btn btn-primary" type="submit">Submit Item</button>
+            <button class="btn btn-info toggle-edit">Toggle Edit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <br>
+    <br>
+
+    <div class="col-xs-8 col-center">
+      <table class="table">
+        <thead>
+          <tr class='container'>
+            <th class="col-xs-4">Name</th>
+            <th class="col-xs-4">Type</th>
+            <th class="col-xs-2">Edit</th>
+            <th class="col-xs-2">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each item in items}}
+            {{> row idToEdit=idToEdit item=item}}
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
 </body>
 
 <template name="row">
-  {{#if matching toggle item._id}}
+  {{#if matching idToEdit item._id}}
     {{> edit}}
   {{else}}
     {{> item}}
@@ -49,34 +58,38 @@
 </template>
 
 <template name="item">
-  <tr>
-    <td>
+  <tr class='row'>
+    <td class="col-xs-4">
       {{item.name}}
     </td>
-    <td>
+    <td class="col-xs-4">
       {{item.type}}
     </td>
-    <td>
+    <td class="col-xs-2">
       <button id="edit" class="btn btn-small btn-warning">Edit</button>
     </td>
-    <td>
+    <td class="col-xs-2">
       <button id="delete" class="btn btn-small btn-danger">Delete</button>
-    </td>    
+    </td>
   </tr>
 </template>
 
 <template name="edit">
-  <tr>
-    <td>
-      <input type="text" value="{{item.name}}"/>
+  <tr class='row'>
+    <td class="col-xs-4">
+      <div class="form-group">
+        <input class="form-control full-width" type="text" value="{{item.name}}"/>
+      </div>
     </td>
-    <td>
-      <input type="text" value="{{item.type}}"/>
+    <td class="col-xs-4">
+      <div class="form-group">
+        <input class="form-control full-width" type="text" value="{{item.type}}"/>
+      </div>
     </td>
-    <td>
+    <td class="col-xs-2">
       <button id="edit" class="btn btn-small btn-warning">Edit</button>
     </td>
-    <td>
+    <td class="col-xs-2">
       <button id="delete" class="btn btn-small btn-danger">Delete</button>
     </td>
   </tr>
