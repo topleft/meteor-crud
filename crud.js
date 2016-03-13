@@ -1,4 +1,3 @@
-Items = new Mongo.Collection("items");
 
 if (Meteor.isClient) {
   Session.setDefault('toggle', false);
@@ -6,7 +5,7 @@ if (Meteor.isClient) {
 
   Template.body.helpers({
     items: function () {
-      return Items.find({});
+      return crud.Items.find({}).fetch();
     },
     toggle: function () {
       return Session.get("toggle");
@@ -23,7 +22,7 @@ if (Meteor.isClient) {
 
       var item = event.target.item.value;
       var type = event.target.type.value;
-      Items.insert({name: item, type: type});
+      crud.Items.insert({itemName: item, type: type});
       event.target.item.value = "";
       event.target.type.value = "";
     },
@@ -31,7 +30,7 @@ if (Meteor.isClient) {
       Session.set('idToEdit', this.item._id);
     },
     'click #delete': function () {
-      Items.remove(this.item._id);
+      crud.Items.remove(this.item._id);
     },
     'click .toggle-edit': function (e) {
       e.preventDefault()
@@ -41,8 +40,8 @@ if (Meteor.isClient) {
 
   Template.row.helpers({
     editToggle: function () {
-      return 
-    },     
+      return
+    },
     matching: function (a, b) {
       return a === b;
     }
