@@ -3,7 +3,7 @@ if (Meteor.isClient) {
   Session.setDefault('toggle', false);
   Session.setDefault('idToEdit', null);
 
-  Template.body.helpers({
+  Template.crud.helpers({
     items: function () {
       return crud.Items.find({}).fetch();
     },
@@ -16,7 +16,7 @@ if (Meteor.isClient) {
 
   });
 
-  Template.body.events({
+  Template.crud.events({
     'submit .new-item': function (event) {
       event.preventDefault();
 
@@ -50,6 +50,6 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-    // code to run on server at startup
+    console.log(crud.Items.find({}).fetch());
   });
 }
