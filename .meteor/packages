@@ -27,6 +27,5 @@ jagi:astronomy
 jagi:astronomy-validators
 accounts-ui
 accounts-password
-useraccounts:flow-routing
 kadira:flow-router
 kadira:blaze-layout

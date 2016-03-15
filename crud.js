@@ -45,7 +45,11 @@ if (Meteor.isClient) {
     matching: function (a, b) {
       return a === b;
     }
-  })
+  });
+
+  Accounts.ui.config({
+    passwordSignUpFields: 'USERNAME_ONLY'
+  });
 }
 
 if (Meteor.isServer) {
