@@ -47,9 +47,7 @@ if (Meteor.isClient) {
     }
   });
 
-  Accounts.ui.config({
-    passwordSignUpFields: 'USERNAME_ONLY'
-  });
+
 }
 
 if (Meteor.isServer) {
