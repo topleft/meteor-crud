@@ -95,7 +95,7 @@ if (Meteor.isClient) {
     },
 
     'click #delete': function (itemId) {
-      Meteor.call('removeItem', itemId)
+      Meteor.call('removeItem', this.item._id)
     },
 
     'click .toggle-edit': function (e) {
@@ -118,7 +118,6 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-    console.log(crud.Items.find({}).fetch());
   });
 
 
