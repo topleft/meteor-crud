@@ -1,0 +1,46 @@
+
+
+<template name='crud'>
+
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-10 col-xs-offset-2">
+        <form class="new-item form-inline">
+          <div class="form-group">
+            <input class="form-control" type="text" name="item" placeholder="Add Item"/>
+            <input class="form-control" type="text" name="type" placeholder="Add Type"/>
+            <button class="btn btn-primary" type="submit">Submit Item</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="col-xs-10 col-center">
+      <table class="table">
+        <thead>
+          <tr class='container'>
+            <th class="col-xs-4">Name</th>
+            <th class="col-xs-4">Type</th>
+            <th class="col-xs-2">Edit</th>
+            <th class="col-xs-2">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each item in items}}
+            {{>row idToEdit=idToEdit item=item}}
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</template>
