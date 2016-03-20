@@ -1,9 +1,6 @@
 
-<head>
-  <title>crud</title>
-</head>
 
-<body>
+<template name='crud'>
 
   <br>
   <br>
@@ -39,7 +36,7 @@
         </thead>
         <tbody>
           {{#each item in items}}
-            {{> row idToEdit=idToEdit item=item}}
+            {{>row idToEdit=idToEdit item=item}}
           {{/each}}
         </tbody>
       </table>
@@ -47,4 +44,4 @@
 
   </div>
 
-</body>
+</template>
