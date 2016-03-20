@@ -1,7 +1,17 @@
 
 if (Meteor.isClient) {
+
   Session.setDefault('toggle', false);
   Session.setDefault('idToEdit', null);
+
+
+  Template.crud.onCreated(() => {
+    Tracker.autorun(() => {
+      Meteor.subscribe('items', () => {
+        console.log(crud.Items.find({}).fetch())
+      })
+    })
+  })
 
   Template.crud.helpers({
     items: function () {
@@ -69,19 +79,25 @@ if (Meteor.isClient) {
   Template.crud.events({
     'submit .new-item': function (e) {
       e.preventDefault();
+      instance = new crud.Item()
+      instance.set('itemName', e.target.item.value)
+      instance.set('type', e.target.type.value)
+      instance.set('ownerId', Meteor.userId())
+      Meteor.call('addItem', instance )
 
-      var item = e.target.item.value;
-      var type = e.target.type.value;
-      crud.Items.insert({itemName: item, type: type});
       e.target.item.value = "";
       e.target.type.value = "";
+
     },
+
     'click #edit': function () {
       Session.set('idToEdit', this.item._id);
     },
-    'click #delete': function () {
-      crud.Items.remove(this.item._id);
+
+    'click #delete': function (itemId) {
+      Meteor.call('removeItem', itemId)
     },
+
     'click .toggle-edit': function (e) {
       e.preventDefault()
       Session.set('idToEdit', 'false')
