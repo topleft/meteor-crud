@@ -16,15 +16,65 @@ if (Meteor.isClient) {
 
   });
 
-  Template.crud.events({
-    'submit .new-item': function (event) {
-      event.preventDefault();
+  Template.createAccount.events({
+    'click .btn': (e) => {
+      e.preventDefault()
 
-      var item = event.target.item.value;
-      var type = event.target.type.value;
+      const accountDetails = {
+        username: $("[name='username']").val(),
+        password: $("[name='password']").val(),
+      }
+      const confirmPassword = $("[name='confirmPassword']").val()
+
+      if (accountDetails.password === confirmPassword) {
+        Accounts.createUser(accountDetails, () => {
+          console.log('id and pw in event', Meteor.userId(), accountDetails.password);
+          Meteor.call('setPassword', Meteor.userId(), accountDetails.password)
+        })
+      }
+
+    }
+  })
+
+  Template.login.events({
+    'click .btn': (e) => {
+      e.preventDefault()
+      const loginDetails = {
+        username: $("[name='username']").val(),
+        password: $("[name='password']").val(),
+      };
+      console.log('deets', loginDetails);
+
+      Meteor.loginWithPassword(loginDetails.username, loginDetails.password, (err) => {
+        console.log(Meteor.user())
+        if (err) {
+          console.log("err?", err);
+          // TODO do somthing to show error
+        }
+      })
+    }
+
+  })
+
+  Template.mainLayout.events({
+    'click #logout': (e) => {
+      console.log('logout');
+      Meteor.logout(() => {
+        FlowRouter.go('/')
+      })
+    }
+
+  })
+
+  Template.crud.events({
+    'submit .new-item': function (e) {
+      e.preventDefault();
+
+      var item = e.target.item.value;
+      var type = e.target.type.value;
       crud.Items.insert({itemName: item, type: type});
-      event.target.item.value = "";
-      event.target.type.value = "";
+      e.target.item.value = "";
+      e.target.type.value = "";
     },
     'click #edit': function () {
       Session.set('idToEdit', this.item._id);
@@ -54,4 +104,6 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
     console.log(crud.Items.find({}).fetch());
   });
+
+
 }
