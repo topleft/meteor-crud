@@ -5,7 +5,8 @@ crud.Item = Astronomy.Class({
     fields: {
       itemName: String,
       type: String,
-      ownerId: String
+      ownerId: String,
+      createdAt: Date
     }
   }
 )

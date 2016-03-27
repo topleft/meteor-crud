@@ -1,0 +1,20 @@
+.btn {
+  border-radius: 1px;
+}
+
+.btn-primary {
+  background-color: #4F708B;
+}
+.btn-success {
+  background-color: #3E8059;
+}
+.btn-warning {
+  background-color: #EFCA57;
+}
+.btn-danger {
+  background-color: #B9684F;
+}
+
+.form-control {
+  border-radius: 1px;
+}

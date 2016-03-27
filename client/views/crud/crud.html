@@ -27,15 +27,16 @@
       <table class="table">
         <thead>
           <tr class='container'>
-            <th class="col-xs-4">Name</th>
-            <th class="col-xs-4">Type</th>
+            <th class="col-xs-3">Name</th>
+            <th class="col-xs-3">Type</th>
+            <th class="col-xs-3">When</th>
             <th class="col-xs-2">Edit</th>
             <th class="col-xs-2">Delete</th>
           </tr>
         </thead>
         <tbody>
           {{#each item in items}}
-            {{>row idToEdit=idToEdit item=item}}
+            {{>row idToEdit=idToEdit idToDelete=idToDelete item=item}}
           {{/each}}
         </tbody>
       </table>
