@@ -1,12 +1,12 @@
 
 Meteor.methods({
   addItem: (instance) => {
-    instance.save()
+    crud.Items.insert(instance)
   },
   editItem: (itemId, instance) => {
     console.log("args", itemId, instance.raw());
     item = crud.Items.findOne(itemId)
-    item.set('itemName', instance.itemName)
+    item.set('name', instance.name)
     item.set('type', instance.type)
     item.save()
   },

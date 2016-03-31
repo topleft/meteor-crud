@@ -28,11 +28,12 @@ Template.crud.helpers({
 Template.crud.events({
   'submit .new-item': function (e) {
     e.preventDefault();
-    instance = new crud.Item()
-    instance.set('itemName', e.target.item.value)
-    instance.set('type', e.target.type.value)
-    instance.set('ownerId', Meteor.userId())
-    instance.set('createdAt', new Date())
+    instance = {
+      'name': e.target.item.value,
+      'type': e.target.type.value,
+      'ownerId': Meteor.userId(),
+      'createdAt': new Date()
+    }
     Meteor.call('addItem', instance )
 
     e.target.item.value = "";
@@ -44,13 +45,13 @@ Template.crud.events({
     Session.set('idToEdit', this.item._id);
   },
 
-  'click #confirm-edit': function () {
-    instance = new crud.Item()
-    instance.set('itemName', $('.edit-name').val())
-    instance.set('type', $('.edit-type').val())
-    Meteor.call('editItem', this.item._id, instance)
-    Session.set('idToEdit', 'false')
-  },
+  // 'click #confirm-edit': function () {
+  //   instance = new crud.Item()
+  //   'name': $('.edit-name').val(),
+  //   'type': $('.edit-type').val(),
+  //   Meteor.call('editItem', this.item._id, instance)
+  //   Session.set('idToEdit', 'false')
+  // },
 
   'click #delete': function () {
     Session.set('idToDelete', this.item._id);
