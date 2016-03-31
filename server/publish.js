@@ -1,4 +1,9 @@
 
 Meteor.publish('items', function () {
-  return crud.Items.find({ownerId: this.userId})
-  })
+  if (Roles.userIsInRole(Meteor.userId(), 'admin')){
+    return crud.Items.find({})
+  }
+  else if (Meteor.userId()) {
+    return crud.Items.find({ownerId: this.userId})
+  }
+})

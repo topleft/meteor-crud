@@ -20,9 +20,9 @@ twbs:bootstrap
 stevezhu:lodash
 reactive-var
 fourseven:scss
-jagi:astronomy
-jagi:astronomy-validators
 accounts-password
 kadira:flow-router
 kadira:blaze-layout
 momentjs:moment
+alanning:roles
+aldeed:simple-schema
