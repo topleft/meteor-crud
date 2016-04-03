@@ -10,13 +10,13 @@
 <template name="item">
   <tr class='row item'>
     <td class="col-xs-3">
-      {{item.itemName}}
+      {{item.name}}
     </td>
     <td class="col-xs-3">
       {{item.type}}
     </td>
     <td class="col-xs-3">
-      {{date(item.createdAt)}}
+      {{dateFromNow(item.createdAt)}}
     </td>
     <td class="col-xs-2">
       <button id="edit" class="btn btn-small btn-warning full-width">Edit</button>
@@ -37,7 +37,7 @@
   <tr class='row item'>
     <td class="col-xs-3">
       <div class="form-group">
-        <input class="form-control full-width edit-name" type="text" value="{{item.itemName}}"/>
+        <input class="form-control full-width edit-name" type="text" value="{{item.name}}"/>
       </div>
     </td>
     <td class="col-xs-3">
@@ -46,7 +46,7 @@
       </div>
     </td>
     <td class="col-xs-3">
-      {{date}}
+      {{dateFromNow(item.createdAt)}}
     </td>
     <td class="col-xs-2">
         <button id="confirm-edit" class="btn btn-small btn-success col-xs-5">O</button>

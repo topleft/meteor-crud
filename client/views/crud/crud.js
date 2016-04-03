@@ -12,80 +12,64 @@ Template.crud.onCreated(() => {
 })
 
 Template.crud.helpers({
-  items: function () {
+
+  items:  () => {
     return crud.Items.find({}).fetch();
   },
-  idToEdit: function () {
+
+  idToEdit:  () => {
     return Session.get('idToEdit');
   },
-  idToDelete: function () {
+
+  idToDelete:  () => {
     return Session.get('idToDelete');
-  }
+  },
 
 });
 
 
 Template.crud.events({
-  'submit .new-item': function (e) {
+  'submit .new-item':  (e) => {
     e.preventDefault();
-    instance = new crud.Item()
-    instance.set('itemName', e.target.item.value)
-    instance.set('type', e.target.type.value)
-    instance.set('ownerId', Meteor.userId())
-    instance.set('createdAt', new Date())
-    Meteor.call('addItem', instance )
+    const instance = {
+      'name': e.target.item.value,
+      'type': e.target.type.value,
+      'ownerId': Meteor.userId(),
+      'createdAt': new Date()
+    }
+    Meteor.call('addItem', instance)
 
     e.target.item.value = "";
     e.target.type.value = "";
 
   },
 
-  'click #edit': function () {
+  'click #edit': () => {
     Session.set('idToEdit', this.item._id);
   },
 
-  'click #confirm-edit': function () {
-    instance = new crud.Item()
-    instance.set('itemName', $('.edit-name').val())
-    instance.set('type', $('.edit-type').val())
+  'click #confirm-edit': () => {
+    const instance = {
+      'name': $('.edit-name').val(),
+      'type': $('.edit-type').val(),
+      'createdAt': new Date()
+    }
     Meteor.call('editItem', this.item._id, instance)
     Session.set('idToEdit', 'false')
   },
 
-  'click #delete': function () {
+  'click #delete': () => {
     Session.set('idToDelete', this.item._id);
   },
 
-  'click #confirm-delete': function () {
+  'click #confirm-delete': () => {
     Meteor.call('removeItem', this.item._id)
   },
 
-  'click .cancel': function (e) {
+  'click .cancel': (e) => {
     e.preventDefault()
     Session.set('idToEdit', 'false')
     Session.set('idToDelete', 'false')
   }
 
-});
-
-Template.row.helpers({
-  matching: function (a, b) {
-    return a === b;
-  }
-});
-
-Template.item.helpers({
-  matching: function (a, b) {
-    return a === b;
-  },
-
-  date: (date) => {
-    return moment(date).fromNow()
-  }
-});
-
-Template.edit.helpers({
-  matching: function (a, b) {
-    return a === b;
-  }
 });
