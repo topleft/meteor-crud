@@ -1,9 +1,4 @@
 Meteor.startup( () => {
-
-  console.log('in startup');
-
-  console.log("users?", Meteor.users.find().fetch());
-
   if (Meteor.users.find().fetch().length < 1) {
     seedUsers()
   }

@@ -1,5 +1,7 @@
 Template.mainLayout.helpers({
   username: () => {
-    return Meteor.user().username
+    user = Meteor.user()
+    if (user)
+      return user.username
   }
 });

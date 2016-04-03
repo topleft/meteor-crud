@@ -10,7 +10,6 @@ Template.createAccount.events({
 
     if (accountDetails.password === confirmPassword) {
       Accounts.createUser(accountDetails, () => {
-        console.log('id and pw in event', Meteor.userId(), accountDetails.password);
         Meteor.call('setPassword', Meteor.userId(), accountDetails.password)
       })
     }
@@ -25,10 +24,8 @@ Template.login.events({
       username: $("[name='username']").val(),
       password: $("[name='password']").val(),
     };
-    console.log('deets', loginDetails);
 
     Meteor.loginWithPassword(loginDetails.username, loginDetails.password, (err) => {
-      console.log(Meteor.user())
       if (err) {
         console.log("err?", err);
         // TODO do somthing to show error
