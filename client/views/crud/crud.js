@@ -1,5 +1,4 @@
 Template.crud.onCreated(function () {
-  console.log(this);
   Tracker.autorun(() => {
     Meteor.subscribe('items')
   })
