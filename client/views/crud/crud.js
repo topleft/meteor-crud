@@ -5,7 +5,6 @@ Session.setDefault('idToEdit', null);
 Session.setDefault('idToDelete', null);
 Session.setDefault('showAll', false);
 
-
 Template.crud.onCreated(() => {
   Tracker.autorun(() => {
     Meteor.subscribe('items')
