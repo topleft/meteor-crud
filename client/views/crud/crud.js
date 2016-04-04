@@ -3,6 +3,7 @@
 Session.setDefault('toggle', false);
 Session.setDefault('idToEdit', null);
 Session.setDefault('idToDelete', null);
+Session.setDefault('showAll', false);
 
 
 Template.crud.onCreated(() => {
@@ -13,17 +14,26 @@ Template.crud.onCreated(() => {
 
 Template.crud.helpers({
 
-  items:  () => {
-    return crud.Items.find({}).fetch();
+  items: () => {
+    if (Session.get('showAll')) {
+      return crud.Items.find({}).fetch();
+    }
+    else {
+      return crud.Items.find({ownerId: Meteor.userId()})
+    }
   },
 
-  idToEdit:  () => {
+  idToEdit: () => {
     return Session.get('idToEdit');
   },
 
-  idToDelete:  () => {
+  idToDelete: () => {
     return Session.get('idToDelete');
   },
+
+  showAll: () => {
+    return Session.get('showAll')
+  }
 
 });
 
@@ -70,6 +80,10 @@ Template.crud.events({
     e.preventDefault()
     Session.set('idToEdit', 'false')
     Session.set('idToDelete', 'false')
+  },
+
+  'change #showAll': (e) => {
+    Session.set('showAll', e.target.checked)
   }
 
 });
