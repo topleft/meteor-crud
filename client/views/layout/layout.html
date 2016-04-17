@@ -3,12 +3,16 @@
     <div class="jumbotron">
       <div class="container">
         <ul class="nav nav-tabs">
-          <li role="presentation" class="active"><a href="#">Home</a></li>
+          <li role="presentation" class="active"><a href="#">My Items</a></li>
+          {{#if admin}}
+            <li role="presentation" class="active"><a href="">All Items</a></li>
+          {{/if}}
           <li class="pull-right btn" id="logout" role="button">Logout</li>
         </ul>
       </div>
       <div class="container">
         <h1>CRUD</h1>
+        <p>{{username}}</p>
       </div>
     </div>
   </header>

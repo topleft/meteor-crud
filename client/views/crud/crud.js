@@ -1,68 +1,87 @@
-
-
-Session.setDefault('toggle', false);
-Session.setDefault('idToEdit', null);
-
-
-Template.crud.onCreated(() => {
+Template.crud.onCreated(function () {
   Tracker.autorun(() => {
     Meteor.subscribe('items')
   })
+
+  this.toggle = new ReactiveVar(false)
+  this.idToEdit = new ReactiveVar(false)
+  this.idToDelete = new ReactiveVar(false)
+  this.showAll = new ReactiveVar(false)
+
 })
 
 Template.crud.helpers({
-  items: function () {
-    return crud.Items.find({}).fetch();
+
+  items: () => {
+    if (Template.instance().showAll.get()) {
+      return crud.Items.find({}).fetch();
+    }
+    else {
+      return crud.Items.find({ownerId: Meteor.userId()})
+    }
   },
-  toggle: function () {
-    return Session.get("toggle");
+
+  idToEdit: () => {
+    return Template.instance().idToEdit.get();
   },
-  idToEdit: function () {
-    return Session.get('idToEdit');
+
+  idToDelete: () => {
+    return Template.instance().idToDelete.get();
+  },
+
+  showAll: () => {
+    return Template.instance().showAll.get()
   }
 
 });
 
 
 Template.crud.events({
-  'submit .new-item': function (e) {
+  'submit .new-item':  (e) => {
     e.preventDefault();
-    instance = new crud.Item()
-    instance.set('itemName', e.target.item.value)
-    instance.set('type', e.target.type.value)
-    instance.set('ownerId', Meteor.userId())
-    Meteor.call('addItem', instance )
+    const instance = {
+      'name': e.target.item.value,
+      'type': e.target.type.value,
+      'ownerId': Meteor.userId(),
+      'createdAt': new Date()
+    }
+    Meteor.call('addItem', instance)
 
     e.target.item.value = "";
     e.target.type.value = "";
 
   },
 
-  'click #edit': function () {
-    Session.set('idToEdit', this.item._id);
+  'click #edit': function (e) {
+    Template.instance().idToEdit.set(this.item._id);
   },
 
-  'click #delete': function () {
+  'click #confirm-edit': function (e) {
+    const instance = {
+      'name': $('.edit-name').val(),
+      'type': $('.edit-type').val(),
+      'createdAt': new Date()
+    }
+    Meteor.call('editItem', this.item._id, instance)
+    Template.instance().idToEdit.set('false')
+  },
+
+  'click #delete': function (e) {
+    Template.instance().idToDelete.set(this.item._id);
+  },
+
+  'click #confirm-delete': function (e) {
     Meteor.call('removeItem', this.item._id)
   },
 
-  'click #cancel-edit': function (e) {
+  'click .cancel': function (e) {
     e.preventDefault()
-    Session.set('idToEdit', 'false')
+    Template.instance().idToEdit.set('false')
+    Template.instance().idToDelete.set('false')
   },
 
-  'click #confirm-edit': function () {
-    instance = new crud.Item()
-    instance.set('itemName', $('.edit-name').val())
-    instance.set('type', $('.edit-type').val())
-    Meteor.call('editItem', this.item._id, instance)
-    Session.set('idToEdit', 'false')
+  'change #showAll': function (e) {
+    Template.instance().showAll.set(e.target.checked)
   }
 
-});
-
-Template.row.helpers({
-  matching: function (a, b) {
-    return a === b;
-  }
 });
