@@ -1,3 +1,4 @@
+
 Template.mainLayout.helpers({
   username: () => {
     user = Meteor.user()

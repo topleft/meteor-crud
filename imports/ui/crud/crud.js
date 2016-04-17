@@ -1,3 +1,12 @@
+import {Meteor} from 'meteor/meteor'
+import {Template} from 'meteor/templating';
+import {ReactiveVar} from 'meteor/reactive-var'
+
+import { Items } from '../../api/items.js'
+import './crud.html'
+import './row.tpl.html'
+
+
 Template.crud.onCreated(function () {
   Tracker.autorun(() => {
     Meteor.subscribe('items')
@@ -14,10 +23,10 @@ Template.crud.helpers({
 
   items: () => {
     if (Template.instance().showAll.get()) {
-      return crud.Items.find({}).fetch();
+      return Items.find({}).fetch();
     }
     else {
-      return crud.Items.find({ownerId: Meteor.userId()})
+      return Items.find({ownerId: Meteor.userId()})
     }
   },
 
