@@ -1,3 +1,10 @@
+
+import { Accounts } from 'meteor/accounts-base';
+import { Templates } from 'meteor/templating'
+import './createAccount.html'
+import './login.html'
+
+
 Template.createAccount.events({
   'click .btn': (e) => {
     e.preventDefault()
