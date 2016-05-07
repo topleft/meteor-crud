@@ -6,6 +6,7 @@ import { Items } from '../../api/items.js'
 import './crud.html'
 import './row.tpl.html'
 
+
 Template.crud.onCreated(function () {
   Tracker.autorun(() => {
     Meteor.subscribe('items')
