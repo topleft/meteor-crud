@@ -7,13 +7,14 @@ import moment from 'moment'
 
 
 export class ReactItems extends Component {
+
   getItems() {
     return Items.find({ownerId: Meteor.userId()})
   }
 
   renderItems() {
     return this.getItems().map((item) => (
-        <Item key={item._id} item={item}/>
+      <Item key={item._id} item={item}/>
     ));
   }
 
@@ -41,10 +42,10 @@ export class Item extends Component {
           {moment(this.props.item.createdAt).fromNow()}
         </td>
         <td class="col-xs-2">
-          <button id="edit" class="btn btn-small btn-warning full-width">Edit</button>
+          <ButtonSet/>
         </td>
         <td class="col-xs-2">
-            <button id="delete" class="btn btn-small btn-danger full-width">Delete</button>
+          <ButtonSet/>
         </td>
       </tr>
     )
@@ -53,4 +54,31 @@ export class Item extends Component {
 
 Item.PropTypes = {
   item: PropTypes.object.isRequired
+}
+
+export class ButtonSet extends Component {
+
+  constructor(props){
+    super(props)
+    this.props.editingItem = false
+  }
+
+  toggleEdit(){
+    console.log("hoppy");
+    this.props.editingItem = (!this.props.editingItem)
+  }
+
+  render(){
+    return (
+      <span>{
+        (this.props.editingItem) ? (<span><button>X</button><button>0</button></span>) :
+          (<button onClick={this.toggleEdit.bind(this)}>Delete</button>)
+      }</span>
+    )
+  }
+
+}
+
+ButtonSet.PropTypes = {
+  editingItem: PropTypes.bool.isRequired
 }
