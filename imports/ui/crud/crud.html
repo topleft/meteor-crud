@@ -38,20 +38,7 @@
 
     <div class="col-xs-12 col-center">
       <table class="table">
-        <thead>
-          <tr class='container'>
-            <th class="col-xs-3">Name</th>
-            <th class="col-xs-3">Type</th>
-            <th class="col-xs-3">When</th>
-            <th class="col-xs-2">Edit</th>
-            <th class="col-xs-2">Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each item in items}}
-            {{>row idToEdit=idToEdit idToDelete=idToDelete item=item}}
-          {{/each}}
-        </tbody>
+          {{> React component=reactRow}}
       </table>
     </div>
 

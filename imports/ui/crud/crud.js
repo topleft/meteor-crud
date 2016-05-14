@@ -5,7 +5,7 @@ import {ReactiveVar} from 'meteor/reactive-var'
 import { Items } from '../../api/items.js'
 import './crud.html'
 import './row.tpl.html'
-
+import { ReactItems } from './item.jsx'
 
 Template.crud.onCreated(function () {
   Tracker.autorun(() => {
@@ -40,6 +40,10 @@ Template.crud.helpers({
 
   showAll: () => {
     return Template.instance().showAll.get()
+  },
+
+  reactRow: () => {
+    return ReactItems
   }
 
 });

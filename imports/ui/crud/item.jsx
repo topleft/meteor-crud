@@ -1,16 +1,14 @@
 import React, {Component, PropTypes}  from 'react'
 import {Meteor} from 'meteor/meteor'
 import {render} from 'react-dom'
+import { Items } from '../../api/items.js'
+import moment from 'moment'
 
 
 
-
-export class Items extends Component {
+export class ReactItems extends Component {
   getItems() {
-    return [
-      {_id: 1, name: 'stuff', type: 'things', createdAt: new Date(), owner: "Ds7DoFdxbPEhwKZQK" },
-      {_id: 2, name: 'table', type: 'wood', createdAt: new Date(), owner: "Ds7DoFdxbPEhwKZQK" }
-    ]
+    return Items.find({ownerId: Meteor.userId()})
   }
 
   renderItems() {
@@ -21,11 +19,9 @@ export class Items extends Component {
 
   render() {
     return (
-      <div class="container">
-        <ul>
+      <tbody class="container">
           {this.renderItems()}
-        </ul>
-      </div>
+      </tbody>
     )
   }
 
@@ -34,7 +30,23 @@ export class Items extends Component {
 export class Item extends Component {
   render() {
     return (
-      <li>{this.props.item.name}</li>
+      <tr class='row item'>
+        <td class="col-xs-3">
+          {this.props.item.name}
+        </td>
+        <td class="col-xs-3">
+          {this.props.item.type}
+        </td>
+        <td class="col-xs-3">
+          {moment(this.props.item.createdAt).fromNow()}
+        </td>
+        <td class="col-xs-2">
+          <button id="edit" class="btn btn-small btn-warning full-width">Edit</button>
+        </td>
+        <td class="col-xs-2">
+            <button id="delete" class="btn btn-small btn-danger full-width">Delete</button>
+        </td>
+      </tr>
     )
   }
 }
