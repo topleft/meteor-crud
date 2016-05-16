@@ -42,10 +42,7 @@ export class Item extends Component {
           {moment(this.props.item.createdAt).fromNow()}
         </td>
         <td class="col-xs-2">
-          <ButtonSet/>
-        </td>
-        <td class="col-xs-2">
-          <ButtonSet/>
+          <ButtonSet itemId={this.props.item._id} method={{label: 'Delete', name:'removeItem'}}/>
         </td>
       </tr>
     )
@@ -60,19 +57,23 @@ export class ButtonSet extends Component {
 
   constructor(props){
     super(props)
-    this.props.editingItem = false
+    this.state = {toggle: false}
   }
 
-  toggleEdit(){
-    console.log("hoppy");
-    this.props.editingItem = (!this.props.editingItem)
+  toggle(){
+    this.setState({toggle: !this.state.toggle})
+  }
+
+  handleClick(){
+    Meteor.call(this.props.method.name, this.props.itemId)
   }
 
   render(){
     return (
       <span>{
-        (this.props.editingItem) ? (<span><button>X</button><button>0</button></span>) :
-          (<button onClick={this.toggleEdit.bind(this)}>Delete</button>)
+        (this.state.toggle) ?
+        (<span><button onClick={this.toggle.bind(this)}>X</button><button onClick={this.handleClick.bind(this)}>0</button></span>) :
+        (<button onClick={this.toggle.bind(this)}>{this.props.method.label}</button>)
       }</span>
     )
   }
@@ -80,5 +81,7 @@ export class ButtonSet extends Component {
 }
 
 ButtonSet.PropTypes = {
-  editingItem: PropTypes.bool.isRequired
+  itemId: PropTypes.string.isRequired,
+  buttonRef: PropTypes.string.isRequired,
+  method: PropTypes.object.isRequired
 }
